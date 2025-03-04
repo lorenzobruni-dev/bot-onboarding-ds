@@ -44,8 +44,7 @@ async def on_member_join(member):
     badge = background.copy()
 
     draw = ImageDraw.Draw(badge)
-    font = ImageFont.truetype(
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
+    font = ImageFont.load_default()
     draw = ImageDraw.Draw(avatar)
     draw.text((120, 20),
               f"Benvenuto {member.name}",

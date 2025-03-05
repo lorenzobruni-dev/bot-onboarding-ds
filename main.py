@@ -53,9 +53,9 @@ async def on_member_join(member):
         font = ImageFont.truetype("arial.ttf", 14)
     except IOError:
         font = ImageFont.load_default()
-    text = f"\033[31mBenvenut* nella casa di \nSTR_EMY @{member.name}\033[0m"
+    text = f"\033[31m Benvenut* nella casa di \nSTR_EMY @{member.name}\033[0m"
 
-    bbox = draw.textbbox((1, 1), text, font=font)
+    bbox = draw.textbbox((1, 1), text, font=font) 
     print(bbox)
     text_width = bbox[2] - bbox[0]
     text_height = bbox[3] - bbox[1]
@@ -78,7 +78,7 @@ async def on_member_join(member):
 
     if isinstance(channel, discord.TextChannel):
         print_debug(f"✅ Badge creato per {member.name}")
-        await channel.send(f"Welcome to the Jungle {member.mention}",
+        await channel.send(f"🎉 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ꜱᴛʀ_ᴜɴɢʟᴇ {member.mention}",
                            file=discord.File(badgepath))
     else:
         print_debug(f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo.")

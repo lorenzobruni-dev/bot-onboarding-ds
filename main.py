@@ -20,12 +20,14 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 matricola_counter = 1 
 ANIME_BACKGROUND = "ANIME_BACKGROUND.png"
- 
+
+def print_debug(message):
+    print(f"\033[31m{message}\033[0m") 
+
 
 @bot.event
 async def on_ready():
-    print(f'✅ Bot connesso come {bot.user}')
-
+    print_debug(f'✅ Bot connesso come {bot.user}')
 
 @bot.event
 async def on_member_join(member):
@@ -44,38 +46,42 @@ async def on_member_join(member):
     badge = background.copy()
 
     draw = ImageDraw.Draw(badge)
-    font = ImageFont.load_default()
-    draw = ImageDraw.Draw(avatar)
-    draw.text((120, 20),
-              f"Benvenuto {member.name}",
-              fill=(255, 255, 255),
-              font=font)
-    draw.text((120, 60),
-              f"Matricola: {matricola_counter}",
-              fill=(255, 255, 255),
-              font=font)
+
+    try:
+        font = ImageFont.truetype("arial.ttf", 14)
+    except IOError:
+        font = ImageFont.load_default()
+    text = f"\033[31mBenvenut* nella casa di \nSTR_EMY @{member.name}\033[0m"
+
+    bbox = draw.textbbox((1, 1), text, font=font)
+    print(bbox)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    
+    badgeTextPositionX = (badge.width - text_width) // 2.1
+    badgeTextPositionY = (badge.height - text_height) // 2
+
+
+    draw.text((badgeTextPositionX, badgeTextPositionY), text, fill=(0, 0, 0), font=font)
+
     badgepath = f"badge_{member.id}.png"
     badge.paste(avatar, (10, 25), avatar)
     
-    print(badgepath)
+    print_debug(badgepath)
     badge.save(f"{badgepath}")
-
 
     matricola_counter += 1
 
     channel = bot.get_channel(int(WELCOME_CHANNEL_ID))
 
     if isinstance(channel, discord.TextChannel):
-        print(f"✅ Badge creato per {member.name}")
-        await channel.send(f"🎉 Benvenuto {member.mention}!",
+        print_debug(f"✅ Badge creato per {member.name}")
+        await channel.send(f"{member.mention}",
                            file=discord.File(badgepath))
     else:
-        print(
-            f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo."
-        )
-
+        print_debug(f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo.")
 
 if TOKEN:
     bot.run(TOKEN)
 else:
-    print("Token non trovato!")
+    print_debug("Token non trovato!")

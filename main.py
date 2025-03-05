@@ -33,7 +33,7 @@ async def on_member_join(member):
     #CREATION BADGE
     avatar_url = member.avatar.url if member.avatar else member.default_avatar.url
     response = requests.get(avatar_url)
-    avatar = Image.open(BytesIO(response.content)).resize((400, 150))
+    avatar = Image.open(BytesIO(response.content)).resize((300, 150))
     background = Image.open(ANIME_BACKGROUND).resize((400, 150))
     badge = Image.new("RGBA" , (400 , 150))
     badge.paste(avatar , (0,0))

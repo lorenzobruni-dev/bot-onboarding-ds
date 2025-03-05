@@ -56,6 +56,7 @@ async def on_member_join(member):
               font=font)
     badgepath = f"badge_{member.id}.png"
     badge.paste(avatar, (10, 25), avatar)
+    badge.save
 
     matricola_counter += 1
 

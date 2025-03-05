@@ -39,31 +39,17 @@ async def on_member_join(member):
     response = requests.get(avatar_url)
     avatar = Image.open(BytesIO(response.content)).resize((100, 100))
 
-    width , height = avatar.size
-
-    widthAvatarInBg = int(width * 0.8)
-    heightAvatarInBg = height
-
-    avatar = avatar.resize((widthAvatarInBg, heightAvatarInBg))
-
     mask = Image.new("L", (100, 100), 0)
     draw = ImageDraw.Draw(mask)
     draw.ellipse((0, 0, 100, 100), fill=255)
     avatar = avatar.convert("RGBA")
     avatar.putalpha(mask)
     background = Image.open(ANIME_BACKGROUND).resize((400, 150))
-    badge = Image.new("RGBA", (400, 200), (255, 255, 255, 0))
-    badge.paste(background, (0, 0))
     badge = background.copy()
-
     draw = ImageDraw.Draw(badge)
 
-
     badgepath = f"badge_{member.id}.png"
-    avatar_x = (badge.width - widthAvatarInBg) // 2  
-    avatar_y = background.height 
-
-    badge.paste(avatar, (avatar_x, avatar_y), avatar)
+    badge.paste(avatar, (10, 25), avatar)
     
     print_debug(badgepath)
     badge.save(f"{badgepath}")

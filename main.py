@@ -50,8 +50,8 @@ async def on_member_join(member):
     else:
         print(f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo.")
 
-    #RUNNING BOT
-    if TOKEN:
-        bot.run(TOKEN)
-    else:
-        print("Token non trovato!")
+#RUNNING BOT
+if TOKEN:
+    bot.run(TOKEN)
+else:
+    print("Token non trovato!")

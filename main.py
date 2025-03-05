@@ -7,65 +7,51 @@ from keep_alive import keep_alive
 import os
 from dotenv import load_dotenv
 
+#LOADING ENV AND FLASK SERVER FUNCTION
 load_dotenv()
 keep_alive()
 
-print(type("ᴏᴘᴇɴ ꜱᴀʟᴏᴏɴ"))
-
-TOKEN = os.getenv("DISCORD_TOKEN")
-WELCOME_CHANNEL_ID = os.getenv("DISCORD_WELCOME_CHANNEL_ID")
-
+#INITILIZED DISCORD TOKEN AND PERMISSIONS 
 intents = discord.Intents.default()
 intents.members = True
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
-
-matricola_counter = 1 
+TOKEN = os.getenv("DISCORD_TOKEN")
+WELCOME_CHANNEL_ID = os.getenv("DISCORD_WELCOME_CHANNEL_ID")
 ANIME_BACKGROUND = "ANIME_BACKGROUND.png"
 
-def print_debug(message):
-    print(f"\033[31m{message}\033[0m") 
+#BOT EVENT - BOT CONNECTION
+@bot.event 
+async def on_ready(): 
+    print(f'✅ Bot connesso come {bot.user}')
 
-
-@bot.event
-async def on_ready():
-    print_debug(f'✅ Bot connesso come {bot.user}')
-
+#BOT EVENT - JOING MEMBER 
 @bot.event
 async def on_member_join(member):
     global matricola_counter
 
+    #CREATION BADGE
     avatar_url = member.avatar.url if member.avatar else member.default_avatar.url
     response = requests.get(avatar_url)
-    avatar = Image.open(BytesIO(response.content)).resize((100, 100))
-
-    mask = Image.new("L", (100, 100), 0)
-    draw = ImageDraw.Draw(mask)
-    draw.ellipse((0, 0, 100, 100), fill=255)
-    avatar = avatar.convert("RGBA")
-    avatar.putalpha(mask)
+    avatar = Image.open(BytesIO(response.content)).resize((400, 150))
     background = Image.open(ANIME_BACKGROUND).resize((400, 150))
-    badge = background.copy()
-    draw = ImageDraw.Draw(badge)
-
+    badge = Image.new("RGBA" , (400 , 150))
+    badge.paste(avatar , (0,0))
+    badge.paste(background , (0,0) , background)
     badgepath = f"badge_{member.id}.png"
-    badge.paste(avatar, (10, 25), avatar)
-    
-    print_debug(badgepath)
-    badge.save(f"{badgepath}")
+    badge.save(badgepath)
 
-    matricola_counter += 1
-
+    #INITIALIZATION CHANNEL CONFIGURATION
     channel = bot.get_channel(int(WELCOME_CHANNEL_ID))
-
     if isinstance(channel, discord.TextChannel):
-        print_debug(f"✅ Badge creato per {member.name}")
+        print(f"✅ Badge creato per {member.name}")
         await channel.send(f"🎉 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴛʜᴇ ꜱᴛʀ_ᴜɴɢʟᴇ {member.mention}",
                            file=discord.File(badgepath))
     else:
-        print_debug(f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo.")
+        print(f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo.")
 
-if TOKEN:
-    bot.run(TOKEN)
-else:
-    print_debug("Token non trovato!")
+    #RUNNING BOT
+    if TOKEN:
+        bot.run(TOKEN)
+    else:
+        print("Token non trovato!")

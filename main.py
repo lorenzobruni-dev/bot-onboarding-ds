@@ -10,6 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 keep_alive()
 
+print(type("ᴏᴘᴇɴ ꜱᴀʟᴏᴏɴ"))
+
 TOKEN = os.getenv("DISCORD_TOKEN")
 WELCOME_CHANNEL_ID = os.getenv("DISCORD_WELCOME_CHANNEL_ID")
 

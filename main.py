@@ -26,6 +26,8 @@ ANIME_BACKGROUND = "ANIME_BACKGROUND.png"
 def print_debug(message):
     print(f"\033[31m{message}\033[0m") 
 
+def 
+
 
 @bot.event
 async def on_ready():
@@ -53,7 +55,7 @@ async def on_member_join(member):
         font = ImageFont.truetype("arial.ttf", 14)
     except IOError:
         font = ImageFont.load_default()
-    text = f"\033[31m Benvenut* nella casa di \nSTR_EMY @{member.name}\033[0m"
+    text = f"ʙᴇɴᴠᴇɴᴜᴛ* ɴᴇʟʟᴀ ᴄᴀꜱᴀ ᴅɪ ꜱᴛʀ_ᴇᴍʏ"
 
     bbox = draw.textbbox((1, 1), text, font=font) 
     print(bbox)
@@ -64,7 +66,7 @@ async def on_member_join(member):
     badgeTextPositionY = (badge.height - text_height) // 2
 
 
-    draw.text((badgeTextPositionX, badgeTextPositionY), text, fill=(0, 0, 0), font=font)
+    draw.text((badgeTextPositionX, badgeTextPositionY), text, fill="white", font=font)
 
     badgepath = f"badge_{member.id}.png"
     badge.paste(avatar, (10, 25), avatar)

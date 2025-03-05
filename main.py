@@ -26,8 +26,6 @@ ANIME_BACKGROUND = "ANIME_BACKGROUND.png"
 def print_debug(message):
     print(f"\033[31m{message}\033[0m") 
 
-def 
-
 
 @bot.event
 async def on_ready():

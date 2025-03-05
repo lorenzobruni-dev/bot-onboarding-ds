@@ -53,7 +53,7 @@ async def on_member_join(member):
         font = ImageFont.truetype("arial.ttf", 14)
     except IOError:
         font = ImageFont.load_default()
-    text = "ʙᴇɴᴠᴇɴᴜᴛ* ɴᴇʟʟᴀ ᴄᴀꜱᴀ ᴅɪ ᴇᴍʏ🤘"
+    text = "Benvenut* nella casa di STR_EMY🤘"
 
     bbox = draw.textbbox((1, 1), text, font=font) 
     print(bbox)

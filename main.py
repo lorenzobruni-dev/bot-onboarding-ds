@@ -18,9 +18,9 @@ intents.members = True
 intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-matricola_counter = 1  # Contatore per le matricole
+matricola_counter = 1 
 ANIME_BACKGROUND = "ANIME_BACKGROUND.png"
-
+ 
 
 @bot.event
 async def on_ready():

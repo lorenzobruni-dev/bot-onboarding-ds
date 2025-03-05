@@ -78,7 +78,7 @@ async def on_member_join(member):
 
     if isinstance(channel, discord.TextChannel):
         print_debug(f"✅ Badge creato per {member.name}")
-        await channel.send(f"{member.mention}",
+        await channel.send(f"Welcome to the Jungle {member.mention}",
                            file=discord.File(badgepath))
     else:
         print_debug(f"Errore: Il canale con ID {WELCOME_CHANNEL_ID} non è stato trovato o non è un canale di testo.")
